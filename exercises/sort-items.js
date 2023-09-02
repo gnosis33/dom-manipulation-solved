@@ -1,8 +1,8 @@
 /**
  * SORTING NODES WITHIN A CONTAINER
  * Please, make sure to read the following files in the exercises-info folder before you start
- * * "02 SortingNode.md" 
-*/
+ * * "02 SortingNode.md"
+ */
 
 /**
  * @task
@@ -13,8 +13,6 @@
 
 // Your code goes here...
 
-
-
 /**
  * @task
  * Select all sort buttons by class of "sortBtn" as a NodeList.
@@ -23,8 +21,6 @@
  */
 
 // Your code goes here...
-
-
 
 /**
  * @task
@@ -39,8 +35,6 @@
 
 // Your code goes here...
 
-
-
 /**
  * @task
  * Iterate through the every item in sortBtn NodeList and apply the
@@ -51,4 +45,28 @@
 
 // Your code goes here...
 
+// Select all elements that have class of "item" as a NodeList
+const allItems = document.querySelectorAll(".item");
 
+// Select all sort buttons by class of "sortBtn" as a NodeList
+const sortBtn = document.querySelectorAll(".sortBtn");
+
+// Function to sort data based on the direction ('asc' or 'desc')
+const sortData = (direction) => {
+    const container = document.getElementById("main");
+    const itemsArray = Array.from(allItems);
+    itemsArray.sort((a, b) => {
+        const idA = parseInt(a.id, 10);
+        const idB = parseInt(b.id, 10);
+        return direction === "asc" ? idA - idB : idB - idA;
+    });
+    itemsArray.forEach((item) => container.appendChild(item));
+};
+
+// Adding click event listeners to sort buttons
+sortBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        const sortDir = btn.dataset.sortdir;
+        sortData(sortDir);
+    });
+});

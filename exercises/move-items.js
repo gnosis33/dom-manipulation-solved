@@ -2,7 +2,7 @@
  * SORTING NODES WITHIN A CONTAINER
  * Please, make sure to read the following files in the exercises-info folder before you start
  * * 01 SelectNodes.md
-*/
+ */
 
 /**
  * @task
@@ -13,8 +13,6 @@
 
 // Your code goes here...
 
-
-
 /**
  * @task
  * Select the main container by the id of "main"
@@ -24,8 +22,6 @@
 
 // Your code goes here
 
-
-
 /**
  * @task
  * Select the favorites container by id of "favs"
@@ -34,8 +30,6 @@
  */
 
 // Your code goes here
-
-
 
 /**
  * @task
@@ -47,8 +41,6 @@
  */
 
 // Your code goes here
-
-
 
 /**
  * @task
@@ -66,4 +58,34 @@
 
 // Your code goes here...
 
+// Select all elements that have class of "item" as a NodeList
+const allItems = document.querySelectorAll(".item");
 
+// Select the main container by its ID
+const main = document.getElementById("main");
+
+// Select the favorites container by its ID
+const favs = document.getElementById("favs");
+
+// Function to update collections based on item id and direction
+const updateCollections = (id, direction) => {
+    const item = document.getElementById(id);
+    const icon = item.querySelector("i");
+    if (direction === "toMain") {
+        main.appendChild(item);
+        icon.className = "fa-solid fa-heart-circle-plus";
+    } else if (direction === "toFavs") {
+        favs.appendChild(item);
+        icon.className = "fa-solid fa-heart-crack";
+    }
+};
+
+// Iterate through each item and add click event listener
+allItems.forEach((item) => {
+    item.addEventListener("click", () => {
+        const parentId = item.parentNode.id;
+        const id = item.id;
+        const direction = parentId === "main" ? "toFavs" : "toMain";
+        updateCollections(id, direction);
+    });
+});

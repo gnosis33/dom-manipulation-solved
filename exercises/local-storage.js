@@ -38,3 +38,54 @@
  */
 
 // Your code goes here...
+
+// Selecting the container that holds all the items
+const cardsContainer = document.querySelector(".cardsContainer");
+
+// Function to set the background color to red for items listed in favorites in local storage
+const setFavoriteBackground = () => {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    favorites.forEach((id) => {
+        const card = document.getElementById(id);
+        if (card) {
+            card.style.backgroundColor = "red";
+        }
+    });
+};
+
+// Run the function to initially set the background colors
+setFavoriteBackground();
+
+// Function to add an ID to favorites in local storage
+const addFavorite = (id) => {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    if (!favorites.includes(id)) {
+        favorites.push(id);
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+    }
+};
+
+// Function to remove an ID from favorites in local storage
+const removeFavorite = (id) => {
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    favorites = favorites.filter((favId) => favId !== id);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+};
+
+// Callback function for the click event
+const handleCardClick = (event) => {
+    const card = event.target;
+    if (card.classList.contains("card")) {
+        const id = card.id;
+        if (card.style.backgroundColor === "red") {
+            card.style.backgroundColor = "white";
+            removeFavorite(id);
+        } else {
+            card.style.backgroundColor = "red";
+            addFavorite(id);
+        }
+    }
+};
+
+// Adding the event listener to the container using event delegation
+cardsContainer.addEventListener("click", handleCardClick);
